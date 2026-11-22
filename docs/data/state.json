@@ -1,6 +1,5 @@
 {
  "dates": [
-  "Dimanche 22 novembre",
   "Lundi 23 novembre",
   "Mardi 24 novembre",
   "Mercredi 25 novembre",
@@ -13,7 +12,8 @@
   "Mercredi 02 décembre",
   "Jeudi 03 décembre",
   "Vendredi 04 décembre",
-  "Samedi 05 décembre"
+  "Samedi 05 décembre",
+  "Dimanche 06 décembre"
  ],
  "sentinel_days": [
   "Lundi 23 novembre",
@@ -42,15 +42,6 @@
   "Elisabeth": "14e"
  },
  "centres": {
-  "Mercredi 02 décembre": {
-   "Elisabeth": 35,
-   "Rigoulot - La Plaine": 31,
-   "Dunois": 24,
-   "Moureu - Baudricourt": 14,
-   "Georges Carpentier": 10,
-   "Cordelières": 7,
-   "Poterne des Peupliers": 4
-  },
   "Jeudi 03 décembre": {
    "Rigoulot - La Plaine": 64,
    "Elisabeth": 37,
@@ -100,5 +91,5 @@
  "horaires_ts": "2026-11-22 23:58:23",
  "remplissage": {},
  "alertes_libres": [],
- "last_run": "2026-11-22 23:58:23"
+ "last_run": "2026-11-23 00:01:05"
 }
