@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veille Paris Tennis Padel</title>
+<style>
+  :root { --bg:#f7f7f5; --card:#fff; --text:#1d1d1b; --muted:#6b6b66; --line:#e4e4df; --accent:#2f6f4f; --warn:#b4532a; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#161615; --card:#21211f; --text:#ececea; --muted:#9a9a94; --line:#33332f; --accent:#6fbf93; --warn:#e08a5f; } }
+  * { box-sizing: border-box; }
+  body { margin:0; font:15px/1.5 system-ui, -apple-system, Segoe UI, sans-serif; background:var(--bg); color:var(--text); }
+  main { max-width:1000px; margin:0 auto; padding:24px 16px 48px; }
+  h1 { font-size:22px; font-weight:600; margin:0 0 4px; }
+  h2 { font-size:15px; font-weight:600; margin:0 0 12px; }
+  .sub { color:var(--muted); font-size:13px; margin-bottom:20px; }
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; margin-bottom:16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:16px; }
+  .kpis .card { margin:0; }
+  .label { color:var(--muted); font-size:12px; }
+  .value { font-size:24px; font-weight:600; margin-top:2px; }
+  .value.accent { color:var(--accent); }
+  .hint { color:var(--muted); font-size:12px; margin-top:2px; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th, td { text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); }
+  th { color:var(--muted); font-weight:500; font-size:12px; }
+  td.num { text-align:right; font-variant-numeric:tabular-nums; }
+  .tag { font-size:12px; padding:1px 8px; border-radius:99px; border:1px solid currentColor; }
+  .tag.new { color:var(--accent); } .tag.up { color:var(--warn); }
+  .empty { color:var(--muted); font-size:14px; }
+  details > summary { cursor:pointer; list-style:revert; }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip { font:inherit; font-size:13px; padding:4px 10px; border-radius:99px; border:1px solid var(--line); background:transparent; color:var(--text); cursor:pointer; }
+  .chip.on { background:var(--accent); border-color:var(--accent); color:var(--card); }
+  th.sort { cursor:pointer; user-select:none; } th.sort:hover { color:var(--text); }
+  .slot { display:inline-block; font-size:12px; font-variant-numeric:tabular-nums; padding:1px 7px; margin:2px 3px 2px 0; border-radius:6px; border:1px solid var(--line); }
+  .slot small { color:var(--muted); }
+  select.day { font:inherit; font-size:14px; padding:4px 8px; border-radius:8px; border:1px solid var(--line); background:var(--card); color:var(--text); }
+  .health { display:inline-flex; align-items:center; gap:6px; font-size:13px; padding:2px 10px; border-radius:99px; border:1px solid currentColor; margin-left:8px; vertical-align:1px; }
+  .health::before { content:""; width:8px; height:8px; border-radius:50%; background:currentColor; }
+  .health.ok { color:var(--accent); } .health.warn { color:#b8860b; } .health.ko { color:#c0392b; }
+  tr.total td { font-weight:600; border-top:2px solid var(--line); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Veille Paris Tennis Padel <span class="health" id="health" hidden></span></h1>
+  <div class="sub" id="lastRun">Chargement…</div>
+
+  <div class="kpis">
+    <div class="card"><div class="label">Heure d'ouverture la plus fréquente</div><div class="value accent" id="kOpen">–</div><div class="hint" id="kOpenHint"></div></div>
+    <div class="card"><div class="label">Dernier jour ouvert</div><div class="value" id="kLastDay">–</div><div class="hint" id="kLastDayHint"></div></div>
+    <div class="card"><div class="label">Moitié des créneaux réservée en</div><div class="value" id="kFill">–</div><div class="hint" id="kFillHint"></div></div>
+    <div class="card"><div class="label">Délai typique d'une annulation</div><div class="value" id="kCancel">–</div><div class="hint" id="kCancelHint"></div></div>
+  </div>
+
+  <div class="card">
+    <h2>Filtrer par arrondissement <span class="hint">· s'applique aux horaires et aux événements</span></h2>
+    <div class="chips" id="arrFilter"><span class="empty">Disponible après le prochain passage.</span></div>
+  </div>
+
+  <div class="card">
+    <h2>Ouvertures de nouveaux jours</h2>
+    <div id="opens"></div>
+  </div>
+
+  <div class="card">
+    <h2>Derniers événements (par centre)</h2>
+    <div id="events"></div>
+  </div>
+
+  <div class="card">
+    <h2>Horaires disponibles <span class="hint" id="horHint"></span></h2>
+    <div style="margin-bottom:10px"><select class="day" id="horDay"></select></div>
+    <div id="horaires" style="overflow-x:auto"></div>
+  </div>
+
+  <details class="card" id="journal">
+    <summary><h2 style="display:inline">Journal des requêtes</h2> <span class="hint" id="journalHint"></span></summary>
+    <div id="requetes" style="margin-top:12px"></div>
+  </details>
+</main>
+<script>
+function parseCSV(text) {
+  const lines = text.trim().split(/\r?\n/);
+  if (lines.length < 2) return [];
+  const head = lines[0].split(",");
+  return lines.slice(1).map(l => {
+    const cells = []; let cur = "", q = false;
+    for (const ch of l) {
+      if (ch === '"') q = !q;
+      else if (ch === "," && !q) { cells.push(cur); cur = ""; }
+      else cur += ch;
+    }
+    cells.push(cur);
+    return Object.fromEntries(head.map((h, i) => [h, cells[i]]));
+  });
+}
+async function load(path) {
+  try { const r = await fetch(path + "?t=" + Date.now()); return r.ok ? await r.text() : ""; }
+  catch (e) { return ""; }
+}
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+(async () => {
+  const [logTxt, evTxt, stTxt, rqTxt, ceTxt, hoTxt] = await Promise.all([Promise.resolve(""), load("data/events.csv"), load("data/state.json"), load("data/requetes.csv"), load("data/centres.csv"), load("data/horaires.json")]);
+  const log = parseCSV(logTxt), events = parseCSV(evTxt);
+  let state = {}; try { state = JSON.parse(stTxt || "{}"); } catch (e) {}
+
+  document.getElementById("lastRun").textContent = state.last_run
+    ? "Dernier passage : " + state.last_run + " (heure de Paris) · " + (state.dates || []).length + " jours dans la recherche · réservable jusqu'au " + (state.dernier_jour_ouvert || "?")
+    : "Pas encore de données : lance le workflow une première fois.";
+
+  // --- 5. voyant de santé du bot ---
+  const parisNow = () => new Date().toLocaleString("sv-SE", { timeZone: "Europe/Paris" });
+  const asDate = s => new Date(s.replace(" ", "T") + "Z");
+  const healthEl = document.getElementById("health");
+  if (state.last_run) {
+    const ageMin = Math.round((asDate(parisNow()) - asDate(state.last_run)) / 60000);
+    let cls = "ok", txt = "bot actif";
+    if (ageMin > 15) { cls = "ko"; txt = "aucun passage depuis " + (ageMin >= 120 ? Math.round(ageMin / 60) + " h" : ageMin + " min"); }
+    healthEl.className = "health " + cls; healthEl.textContent = txt; healthEl.hidden = false;
+    healthEl.title = "Dernier passage : " + state.last_run;
+  }
+
+  // --- 1. vitesse de remplissage après ouverture ---
+  const fills = Object.entries(state.remplissage || {});
+  const done = fills.filter(([, r]) => r.minutes !== undefined).map(([, r]) => r.minutes).sort((a, b) => a - b);
+  const pending = fills.filter(([, r]) => r.minutes === undefined);
+  const fmtMin = m => m >= 120 ? Math.round(m / 60) + " h" : m + " min";
+  if (done.length) {
+    const med = done[Math.floor((done.length - 1) / 2)];
+    document.getElementById("kFill").textContent = fmtMin(med);
+    document.getElementById("kFillHint").textContent = (done.length > 1 ? "médiane sur " + done.length + " ouvertures" : "sur 1 ouverture") + " · de " + fmtMin(done[0]) + " à " + fmtMin(done[done.length - 1]);
+  } else {
+    document.getElementById("kFillHint").textContent = pending.length ? "ouverture en cours d'observation" : "en attente d'une première ouverture";
+  }
+
+  // --- 2. délai entre l'annulation et le créneau libéré ---
+  const MOIS = { janvier:0, "février":1, mars:2, avril:3, mai:4, juin:5, juillet:6, "août":7, septembre:8, octobre:9, novembre:10, "décembre":11 };
+  function delaiHeures(e) {
+    const m = (e.date_jeu || "").match(/(\d{1,2}) (\S+)$/), t = (e.creneau || "").match(/^(\d{2}):(\d{2})/);
+    if (!m || !t || MOIS[m[2]] === undefined) return null;
+    const seen = asDate(e.timestamp);
+    let slot = new Date(Date.UTC(seen.getUTCFullYear(), MOIS[m[2]], +m[1], +t[1], +t[2]));
+    if (slot < seen - 864e5 * 30) slot = new Date(Date.UTC(seen.getUTCFullYear() + 1, MOIS[m[2]], +m[1], +t[1], +t[2]));
+    return (slot - seen) / 36e5;
+  }
+  const fmtDelai = h => h == null ? "" : h < 0 ? "déjà passé" : h < 48 ? Math.round(h) + " h avant" : Math.round(h / 24) + " j avant";
+  const delais = events.filter(e => e.type === "liberation").map(delaiHeures).filter(h => h != null && h >= 0).sort((a, b) => a - b);
+  if (delais.length) {
+    const med = delais[Math.floor((delais.length - 1) / 2)];
+    const veille = delais.filter(h => h >= 24 && h < 48).length;
+    document.getElementById("kCancel").textContent = fmtDelai(med);
+    document.getElementById("kCancelHint").textContent = `médiane sur ${delais.length} annulation(s) · ${Math.round(100 * veille / delais.length)} % entre 24 et 48 h avant`;
+  } else {
+    document.getElementById("kCancelHint").textContent = "en attente d'une première annulation";
+  }
+
+  const openRows = events.filter(e => e.type === "nouveau_jour");
+  const openMap = {};
+  openRows.forEach(e => { const k = e.date_jeu; if (!openMap[k]) openMap[k] = { date_jeu: k, timestamp: e.timestamp, arr: new Set() }; openMap[k].arr.add(e.arrondissement); });
+  const opens = Object.values(openMap).sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+
+  const byHour = {};
+  opens.forEach(e => { const h = e.timestamp.slice(11, 13) + "h"; byHour[h] = (byHour[h] || 0) + 1; });
+  const top = Object.entries(byHour).sort((a, b) => b[1] - a[1])[0];
+  document.getElementById("kOpen").textContent = top ? top[0] : "–";
+  document.getElementById("kOpenHint").textContent = top ? top[1] + " ouverture(s) sur " + opens.length + " observée(s)" : "en attente d'une première ouverture";
+
+  const lastOpen = opens[opens.length - 1];
+  document.getElementById("kLastDay").textContent = state.dernier_jour_ouvert || (lastOpen ? lastOpen.date_jeu : "–");
+  document.getElementById("kLastDayHint").textContent = lastOpen ? "dernière ouverture vue à " + lastOpen.timestamp : "dernier jour réservable";
+
+
+  document.getElementById("opens").innerHTML = opens.length
+    ? "<table><tr><th>Jour de jeu</th><th>Ouvert à</th><th>Arrondissements</th></tr>" +
+      opens.slice().reverse().slice(0, 30).map(e => `<tr><td>${esc(e.date_jeu)}</td><td>${esc(e.timestamp)}</td><td>${esc([...e.arr].join(", "))}</td></tr>`).join("") + "</table>"
+    : '<div class="empty">Aucune ouverture observée pour l\'instant. La première apparaîtra au prochain nouveau jour.</div>';
+
+  const selArr = new Set();
+  try { JSON.parse(localStorage.getItem("arrFilter") || "[]").forEach(a => selArr.add(a)); } catch (e) {}
+  const keep = a => selArr.size === 0 || selArr.has(a);
+  const rank = a => { const n = parseInt(a, 10); return isNaN(n) ? 999 : (n > 1000 ? 100 + n / 1e5 : n); };
+
+  const ceLines = (ceTxt || "").trim().split(/\r?\n/);
+  const ce = parseCSV(ceTxt || "");
+  const cols = ce.length ? ceLines[0].split(",").slice(2) : [];
+
+  function renderEvents() {
+    const ev = events.filter(e => keep(e.arrondissement));
+    document.getElementById("events").innerHTML = ev.length
+    ? "<table><tr><th>Quand</th><th>Type</th><th>Jour de jeu</th><th>Centre</th><th>Arr.</th><th>Créneau libéré</th><th>Délai</th></tr>" +
+      ev.slice().reverse().slice(0, 60).map(e => `<tr><td>${esc(e.timestamp)}</td><td><span class="tag ${e.type === "nouveau_jour" ? "new" : "up"}">${e.type === "nouveau_jour" ? "nouveau jour" : "libérés"}</span></td><td>${esc(e.date_jeu)}</td><td>${esc(e.centre || "")}</td><td>${esc(e.arrondissement || "")}</td><td>${e.type === "nouveau_jour" ? `<span class="hint">${esc(e.apres || "")} créneaux ouverts</span>` : (e.creneau ? `<span class="slot">${esc(e.creneau)}</span>` : `<span class="hint">+${(+e.apres || 0) - (+e.avant || 0)}</span>`)}</td><td class="hint">${e.type === "liberation" ? esc(fmtDelai(delaiHeures(e))) : ""}</td></tr>`).join("") + "</table>"
+    : '<div class="empty">' + (events.length ? "Aucun événement dans les arrondissements choisis." : "Aucun événement pour l'instant.") + '</div>';
+  }
+
+  let hor = null; try { hor = JSON.parse(hoTxt || "null"); } catch (e) {}
+  const horDays = hor ? [...new Set(Object.values(hor.centres).flatMap(c => Object.keys(c.jours || {})))] : [];
+  const daySel = document.getElementById("horDay");
+  let horDay = "";
+  try { horDay = localStorage.getItem("horDay") || ""; } catch (e) {}
+  if (!horDays.includes(horDay)) horDay = horDays[horDays.length - 1] || "";
+  daySel.innerHTML = horDays.map(d => `<option ${d === horDay ? "selected" : ""}>${esc(d)}</option>`).join("");
+  daySel.onchange = () => { horDay = daySel.value; try { localStorage.setItem("horDay", horDay); } catch (e) {} renderHoraires(); };
+
+  function renderHoraires() {
+    const box = document.getElementById("horaires");
+    if (!hor) { box.innerHTML = '<div class="empty">Disponible après le prochain relevé des horaires.</div>'; daySel.style.display = "none"; return; }
+    document.getElementById("horHint").textContent = "· relevé du " + hor.maj + " (toutes les " + (hor.intervalle_min || 15) + " min)";
+    const rows = Object.entries(hor.centres).filter(([, c]) => keep(c.arrondissement))
+      .sort((a, b) => rank(a[1].arrondissement) - rank(b[1].arrondissement) || a[0].localeCompare(b[0]));
+    box.innerHTML = rows.length ? "<table><tr><th>Arr.</th><th>Centre</th><th>Créneaux libres</th></tr>" + rows.map(([name, c]) => {
+      const byTime = {};
+      (c.jours[horDay] || []).forEach(([t, court]) => { (byTime[t] = byTime[t] || []).push(court); });
+      const cells = Object.keys(byTime).sort().map(t => `<span class="slot">${t} <small>court ${byTime[t].join(", ")}</small></span>`).join("");
+      return `<tr><td>${esc(c.arrondissement)}</td><td><a href="https://tennispadel.paris.fr/tennispadel/jsp/site/Portal.jsp?page=centre-sportif&id=${esc(c.id)}" target="_blank" rel="noopener" style="color:inherit">${esc(name)}</a></td><td>${cells || '<span class="empty">aucun</span>'}</td></tr>`;
+    }).join("") + "</table>" : '<div class="empty">Aucun centre dans les arrondissements choisis.</div>';
+  }
+
+  function renderFilter() {
+    const arrs = [...new Set((hor ? Object.values(hor.centres).map(c => c.arrondissement) : []).concat(ce.map(r => r.arrondissement), events.map(e => e.arrondissement)).filter(Boolean))].sort((a, b) => rank(a) - rank(b));
+    const box = document.getElementById("arrFilter");
+    if (!arrs.length) return;
+    box.innerHTML = `<button class="chip ${selArr.size === 0 ? "on" : ""}" data-a="">Tous</button>` +
+      arrs.map(a => `<button class="chip ${selArr.has(a) ? "on" : ""}" data-a="${esc(a)}">${esc(a)}</button>`).join("");
+    box.querySelectorAll(".chip").forEach(b => b.onclick = () => {
+      const a = b.dataset.a;
+      if (!a) selArr.clear(); else if (selArr.has(a)) selArr.delete(a); else selArr.add(a);
+      try { localStorage.setItem("arrFilter", JSON.stringify([...selArr])); } catch (e) {}
+      renderFilter(); renderEvents(); renderHoraires();
+    });
+  }
+  renderFilter(); renderEvents(); renderHoraires();
+
+  const rq = parseCSV(rqTxt);
+  const lastRq = rq[rq.length - 1];
+  const errs24 = rq.filter(r => r.statut !== "ok" && r.timestamp >= new Date(Date.now() - 864e5).toISOString().slice(0, 10)).length;
+  document.getElementById("journalHint").textContent = lastRq
+    ? `· ${rq.length} passages · dernier : ${lastRq.timestamp} (${lastRq.statut})` + (errs24 ? ` · ${errs24} anomalie(s) récente(s)` : "")
+    : "";
+  document.getElementById("requetes").innerHTML = rq.length
+    ? "<table><tr><th>Heure (Paris)</th><th>Statut</th><th>Jours réservables</th><th>Dernier jour</th><th>Détail</th></tr>" +
+      rq.slice().reverse().slice(0, 200).map(r => `<tr><td>${esc(r.timestamp)}</td><td>${r.statut === "ok" ? "ok" : `<span class="tag up">${esc(r.statut)}</span>`}</td><td class="num">${esc(r.nb_jours)}</td><td>${esc(r.dernier_jour)}</td><td>${esc(r.detail || "")}</td></tr>`).join("") + "</table>"
+    : '<div class="empty">Aucune requête enregistrée.</div>';
+
+})();
+</script>
+</body>
+</html>

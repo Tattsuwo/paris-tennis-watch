@@ -1,0 +1,105 @@
+{
+ "dates": [
+  "Dimanche 22 novembre",
+  "Lundi 23 novembre",
+  "Mardi 24 novembre",
+  "Mercredi 25 novembre",
+  "Jeudi 26 novembre",
+  "Vendredi 27 novembre",
+  "Samedi 28 novembre",
+  "Dimanche 29 novembre",
+  "Lundi 30 novembre",
+  "Mardi 01 décembre",
+  "Mercredi 02 décembre",
+  "Jeudi 03 décembre",
+  "Vendredi 04 décembre",
+  "Samedi 05 décembre"
+ ],
+ "sentinel_days": [
+  "Dimanche 22 novembre",
+  "Lundi 23 novembre",
+  "Mardi 24 novembre",
+  "Mercredi 25 novembre",
+  "Jeudi 26 novembre",
+  "Vendredi 27 novembre",
+  "Samedi 28 novembre",
+  "Dimanche 29 novembre",
+  "Lundi 30 novembre",
+  "Mardi 01 décembre",
+  "Mercredi 02 décembre",
+  "Jeudi 03 décembre",
+  "Vendredi 04 décembre",
+  "Samedi 05 décembre",
+  "Dimanche 06 décembre"
+ ],
+ "dernier_jour_ouvert": "Dimanche 06 décembre",
+ "arr": {
+  "Dunois": "13e",
+  "Moureu - Baudricourt": "13e",
+  "Cordelières": "13e",
+  "Georges Carpentier": "13e",
+  "Poterne des Peupliers": "13e",
+  "Rigoulot - La Plaine": "15e",
+  "Elisabeth": "14e"
+ },
+ "centres": {
+  "Mercredi 02 décembre": {
+   "Elisabeth": 35,
+   "Rigoulot - La Plaine": 31,
+   "Dunois": 24,
+   "Moureu - Baudricourt": 14,
+   "Georges Carpentier": 10,
+   "Cordelières": 7,
+   "Poterne des Peupliers": 4
+  },
+  "Jeudi 03 décembre": {
+   "Rigoulot - La Plaine": 65,
+   "Elisabeth": 37,
+   "Moureu - Baudricourt": 26,
+   "Dunois": 25,
+   "Poterne des Peupliers": 19,
+   "Georges Carpentier": 17,
+   "Cordelières": 9
+  },
+  "Vendredi 04 décembre": {
+   "Rigoulot - La Plaine": 74,
+   "Elisabeth": 46,
+   "Dunois": 28,
+   "Moureu - Baudricourt": 26,
+   "Poterne des Peupliers": 18,
+   "Georges Carpentier": 16,
+   "Cordelières": 9
+  },
+  "Samedi 05 décembre": {
+   "Rigoulot - La Plaine": 35,
+   "Elisabeth": 27,
+   "Cordelières": 14,
+   "Dunois": 14,
+   "Moureu - Baudricourt": 11,
+   "Georges Carpentier": 5,
+   "Poterne des Peupliers": 4
+  },
+  "Dimanche 06 décembre": {
+   "Rigoulot - La Plaine": 43,
+   "Elisabeth": 25,
+   "Cordelières": 20,
+   "Dunois": 12,
+   "Georges Carpentier": 9,
+   "Moureu - Baudricourt": 7,
+   "Poterne des Peupliers": 7
+  },
+  "Vendredi 27 novembre": {
+   "Rigoulot - La Plaine": 49,
+   "Dunois": 26,
+   "Elisabeth": 26,
+   "Moureu - Baudricourt": 17,
+   "Cordelières": 5,
+   "Georges Carpentier": 5,
+   "Poterne des Peupliers": 5
+  }
+ },
+ "horaires_ts": "2026-11-22 15:31:00",
+ "remplissage": {},
+ "alertes_libres": [],
+ "last_run": "2026-11-22 15:38:20"
+}
