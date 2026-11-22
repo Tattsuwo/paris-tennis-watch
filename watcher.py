@@ -76,10 +76,20 @@ SESSION = requests.Session()
 SESSION.headers.update(UA)
 
 
+def retry(call):
+    """Le site renvoie parfois une erreur 502 passagère : on réessaie une fois après 5 s."""
+    try:
+        r = call()
+        r.raise_for_status()
+    except requests.RequestException:
+        time.sleep(5)
+        r = call()
+        r.raise_for_status()
+    return r
+
+
 def fetch(params):
-    r = SESSION.get(BASE, params=params, timeout=30)
-    r.raise_for_status()
-    return r.text
+    return retry(lambda: SESSION.get(BASE, params=params, timeout=30)).text
 
 
 def search(date_label):
@@ -90,10 +100,8 @@ def search(date_label):
         "selectHourFrom-desktop": "08:00", "selectHourTo-desktop": "22:00",
         "mobileViewType": "list",
     }
-    r = SESSION.post(BASE, params={"version": "desktop", "page": "paristennis", "sport": SPORT},
-                     data=data, timeout=30)
-    r.raise_for_status()
-    return r.text
+    return retry(lambda: SESSION.post(BASE, params={"version": "desktop", "page": "paristennis", "sport": SPORT},
+                                      data=data, timeout=30)).text
 
 
 def lines_of(page):
@@ -144,9 +152,8 @@ def centre_page(cid):
     """Page d'un centre : (nom, {jour: nb de créneaux libres}) sur toute la fenêtre de réservation."""
     # Requête SANS les cookies de la session : sinon la page du centre reprend le filtre
     # de date de la dernière recherche et n'affiche qu'un seul jour.
-    r = requests.get(BASE, params={"page": "centre-sportif", "id": cid}, headers=UA, timeout=60)
-    r.raise_for_status()
-    page = r.text
+    page = retry(lambda: requests.get(BASE, params={"page": "centre-sportif", "id": cid},
+                                      headers=UA, timeout=60)).text
     m = TITLE_RE.search(page)
     name = html.unescape(m.group(1)).strip() if m else f"centre {cid}"
     days, detail, cur, court = {}, {}, None, ""
