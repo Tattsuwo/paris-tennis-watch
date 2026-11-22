@@ -75,7 +75,7 @@
    "Cordelières": 14,
    "Dunois": 14,
    "Moureu - Baudricourt": 10,
-   "Georges Carpentier": 5,
+   "Georges Carpentier": 4,
    "Poterne des Peupliers": 4
   },
   "Dimanche 06 décembre": {
@@ -97,8 +97,8 @@
    "Poterne des Peupliers": 5
   }
  },
- "horaires_ts": "2026-11-22 20:28:23",
+ "horaires_ts": "2026-11-22 20:38:21",
  "remplissage": {},
  "alertes_libres": [],
- "last_run": "2026-11-22 20:36:20"
+ "last_run": "2026-11-22 20:38:21"
 }
