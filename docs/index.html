@@ -38,6 +38,7 @@
   .health { display:inline-flex; align-items:center; gap:6px; font-size:13px; padding:2px 10px; border-radius:99px; border:1px solid currentColor; margin-left:8px; vertical-align:1px; }
   .health::before { content:""; width:8px; height:8px; border-radius:50%; background:currentColor; }
   .health.ok { color:var(--accent); } .health.warn { color:#b8860b; } .health.ko { color:#c0392b; }
+  #requetes { overflow-x:auto; } #requetes td:not(:last-child), #requetes th { white-space:nowrap; } #requetes td:last-child { word-break:break-word; }
   tr.total td { font-weight:600; border-top:2px solid var(--line); }
 </style>
 </head>
@@ -195,7 +196,9 @@ function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&l
   }
 
   let hor = null; try { hor = JSON.parse(hoTxt || "null"); } catch (e) {}
-  const horDays = hor ? [...new Set(Object.values(hor.centres).flatMap(c => Object.keys(c.jours || {})))] : [];
+  const MOIS_IDX = { janvier:1, "février":2, mars:3, avril:4, mai:5, juin:6, juillet:7, "août":8, septembre:9, octobre:10, novembre:11, "décembre":12 };
+  const dayKey = d => { const m = d.match(/(\d{1,2}) (\S+)$/); if (!m) return 0; const mo = MOIS_IDX[m[2]] || 0, cur = new Date().getMonth() + 1; return ((mo < cur - 1 ? mo + 12 : mo) * 100) + +m[1]; };
+  const horDays = hor ? [...new Set(Object.values(hor.centres).flatMap(c => Object.keys(c.jours || {})))].sort((a, b) => dayKey(a) - dayKey(b)) : [];
   const daySel = document.getElementById("horDay");
   let horDay = "";
   try { horDay = localStorage.getItem("horDay") || ""; } catch (e) {}
