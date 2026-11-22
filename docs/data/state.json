@@ -80,7 +80,7 @@
   },
   "Dimanche 06 décembre": {
    "Rigoulot - La Plaine": 41,
-   "Elisabeth": 24,
+   "Elisabeth": 23,
    "Cordelières": 19,
    "Dunois": 12,
    "Georges Carpentier": 7,
@@ -100,5 +100,5 @@
  "horaires_ts": "2026-11-22 21:08:44",
  "remplissage": {},
  "alertes_libres": [],
- "last_run": "2026-11-22 21:10:37"
+ "last_run": "2026-11-22 21:12:24"
 }
