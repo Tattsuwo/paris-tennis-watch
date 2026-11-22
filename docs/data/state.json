@@ -85,7 +85,7 @@
    "Dunois": 12,
    "Georges Carpentier": 7,
    "Moureu - Baudricourt": 7,
-   "Poterne des Peupliers": 7
+   "Poterne des Peupliers": 6
   },
   "Vendredi 27 novembre": {
    "Rigoulot - La Plaine": 49,
@@ -100,5 +100,5 @@
  "horaires_ts": "2026-11-22 22:08:23",
  "remplissage": {},
  "alertes_libres": [],
- "last_run": "2026-11-22 22:08:23"
+ "last_run": "2026-11-22 22:10:49"
 }
