@@ -70,7 +70,7 @@
    "Poterne des Peupliers": 4
   },
   "Dimanche 06 décembre": {
-   "Rigoulot - La Plaine": 24,
+   "Rigoulot - La Plaine": 23,
    "Cordelières": 15,
    "Elisabeth": 15,
    "Dunois": 12,
@@ -104,5 +104,5 @@
  },
  "max_jour": "2026-12-07",
  "alertes_libres": [],
- "last_run": "2026-11-23 21:12:25"
+ "last_run": "2026-11-23 21:14:26"
 }
