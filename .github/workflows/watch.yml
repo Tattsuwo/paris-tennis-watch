@@ -4,7 +4,9 @@ on:
   workflow_dispatch:   # déclenché toutes les 2 min par cron-job.org
 
 permissions:
-  contents: write
+  contents: write      # enregistrer les données dans le dépôt
+  pages: write         # publier le tableau de bord
+  id-token: write
 
 concurrency:
   group: veille
@@ -14,10 +16,13 @@ jobs:
   watch:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -37,6 +42,24 @@ jobs:
           git config user.name "veille-bot"
           git config user.email "veille-bot@users.noreply.github.com"
           git add docs/data
-          git diff --cached --quiet || git commit -m "data $(TZ=Europe/Paris date +%F_%H:%M)"
-          git pull --rebase --quiet || true
-          git push
+          git diff --cached --quiet && exit 0
+          git commit -q -m "data $(TZ=Europe/Paris date +%F_%H:%M)"
+          # 3 essais : si le dépôt a changé entre-temps, on récupère et nos données gagnent en cas de conflit
+          for i in 1 2 3; do
+            git pull -q --rebase -X theirs origin main && git push -q && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep $((i * 5))
+          done
+          echo "Enregistrement impossible après 3 essais" && exit 1
+
+      # Publication du tableau de bord par ce workflow (plus de build Pages automatique à chaque enregistrement)
+      - name: Préparer la page
+        if: always()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Publier la page
+        if: always()
+        id: deploy
+        uses: actions/deploy-pages@v4
