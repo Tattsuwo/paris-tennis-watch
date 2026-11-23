@@ -244,6 +244,7 @@ def main():
     state.setdefault("centres", {})
     state.setdefault("arr", {})
     state.setdefault("remplissage", {})
+    state.setdefault("ouv_centres", {})   # {jour: {centre: heure à laquelle il a ouvert ce jour}}
 
     try:
         dates = available_dates()
@@ -294,10 +295,17 @@ def main():
 
             before_day = state["centres"].get(d)
             if d in opened:
-                arrs = sorted({a for a, n in centres.values() if n > 0})
+                state["ouv_centres"][d] = {}
+            # Ouverture centre par centre : un centre est « ouvert » pour ce jour dès qu'il y a des
+            # créneaux. Ceux qui ouvrent après le centre témoin sont notés à leur propre heure.
+            oc = state["ouv_centres"].get(d)
+            if oc is not None:
                 for c, (a, n) in sorted(centres.items(), key=lambda x: x[1][0]):
-                    if n > 0:
+                    if n > 0 and c not in oc:
+                        oc[c] = now
                         append(EVENTS, H_EVENTS, [now, "nouveau_jour", d, c, a, 0, n, ""])
+            if d in opened:
+                arrs = sorted({a for a, n in centres.values() if n > 0})
                 total = sum(n for _, n in centres.values())
                 state["remplissage"][d] = {"ouverture": now, "n0": total}
                 resume_ouvertures.append(f"{d} ({total} créneaux, arr. {', '.join(arrs)})")
@@ -323,6 +331,9 @@ def main():
                     rec["moitie"] = now
                     rec["minutes"] = round((t1 - t0).total_seconds() / 60)
             time.sleep(1)
+
+        # suivi par centre : on oublie les jours qui ne sont plus suivis
+        state["ouv_centres"] = {d: v for d, v in state["ouv_centres"].items() if d in watched}
 
         # une seule notification, même si plusieurs jours ouvrent d'un coup
         if resume_ouvertures:
@@ -424,6 +435,7 @@ def main():
             json.dump({"dates": dates, "sentinel_days": s_list, "dernier_jour_ouvert": s_list[-1] if s_list else "",
                        "arr": arr_of, "centres": new_state_centres, "horaires_ts": last_h,
                        "remplissage": state["remplissage"], "max_jour": state.get("max_jour"),
+                       "ouv_centres": state["ouv_centres"],
                        "alertes_libres": state.get("alertes_libres", []), "last_run": now},
                       f, ensure_ascii=False, indent=1)
         print(f"{now} : recherche jusqu'au {dates[-1]} ; réservable jusqu'au {s_list[-1] if s_list else '?'}")
