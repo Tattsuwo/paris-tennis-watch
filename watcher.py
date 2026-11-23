@@ -131,6 +131,22 @@ ID_RE = re.compile(r"page=centre-sportif(?:&amp;|&)id=(\d+)")
 TITLE_RE = re.compile(r"<title>\s*TENNIS PADEL\s*-\s*(.*?)\s*-\s*Consultation", re.I | re.S)
 
 
+MOIS = {"janvier": 1, "février": 2, "mars": 3, "avril": 4, "mai": 5, "juin": 6, "juillet": 7,
+        "août": 8, "septembre": 9, "octobre": 10, "novembre": 11, "décembre": 12}
+
+
+def date_of(label):
+    """'Lundi 07 décembre' -> '2026-12-07' (année déduite : jamais plus de 6 mois dans le passé)."""
+    m = re.match(r"^\S+ (\d{1,2}) (\S+)$", label)
+    if not m or m.group(2) not in MOIS:
+        return None
+    today = datetime.now(TZ).date()
+    d = datetime(today.year, MOIS[m.group(2)], int(m.group(1))).date()
+    if (today - d).days > 180:
+        d = d.replace(year=today.year + 1)
+    return d.isoformat()
+
+
 def available_dates():
     page = fetch({"page": "paristennis", "sport": SPORT})
     HOME["page"] = page
@@ -238,13 +254,20 @@ def main():
         s_name, s_days, s_detail = centre_page(SENTINEL_ID)
         s_list = list(s_days)
         prev_s = state.get("sentinel_days") or []
-        if len(s_list) < 10:
-            raise RuntimeError(f"page du centre témoin incomplète ({len(s_list)} jour(s))")
-        # ouverture = jour apparu en FIN de liste (après l'ancien dernier jour), seulement si
-        # l'état précédent était complet (évite de fausses ouvertures après un bug ou un reset)
-        opened = []
-        if len(prev_s) >= 10 and prev_s[-1] in s_list:
-            opened = [d for d in s_list[s_list.index(prev_s[-1]) + 1:] if d not in prev_s]
+        # Page anormale : 1 seul jour (filtre de recherche resté actif) ou chute brutale du nombre
+        # de jours. Une fenêtre qui raccourcit d'1 jour par jour (pause des ouvertures) reste normale.
+        if len(s_list) <= 1:
+            raise RuntimeError(f"page du centre témoin anormale ({len(s_list)} jour(s))")
+        chute = len(prev_s) >= 5 and len(s_list) < len(prev_s) - 3   # signalé dans le journal, sans bloquer
+        # Ouverture = jour plus lointain que le plus lointain jamais vu. Un jour qui réapparaît
+        # (centre témoin complet puis annulation) n'est donc pas pris pour une ouverture.
+        dated = {d: date_of(d) for d in s_list}
+        max_vu = state.get("max_jour")
+        if not max_vu and len(prev_s) >= 10:          # migration depuis l'ancien état
+            max_vu = max((date_of(d) for d in prev_s), default=None)
+        opened = [d for d in s_list if max_vu and dated[d] and dated[d] > max_vu] if max_vu else []
+        candidats = [v for v in dated.values() if v] + ([max_vu] if max_vu else [])
+        state["max_jour"] = max(candidats) if candidats else max_vu
 
         # Jours suivis : les derniers de la recherche + ceux au-delà (J+14), que la recherche
         # accepte même s'ils ne sont pas proposés dans sa liste de dates.
@@ -253,6 +276,7 @@ def main():
         alert_days = [d for d in s_list if any(d.split()[0] == a["jour"] for a in ALERTES)]
         watched = list(dict.fromkeys(dates[-WATCH_LAST_N_DAYS:] + extra + opened + alert_days))
         alert_check = False
+        resume_ouvertures = []
         visibles = set(dates[-WATCH_LAST_N_DAYS:] + extra + opened)  # jours publiés dans log/centres
 
         new_state_centres = {}
@@ -276,7 +300,7 @@ def main():
                         append(EVENTS, H_EVENTS, [now, "nouveau_jour", d, c, a, 0, n, ""])
                 total = sum(n for _, n in centres.values())
                 state["remplissage"][d] = {"ouverture": now, "n0": total}
-                notify("Nouveau jour ouvert", f"{d} à {now[11:16]} - {total} créneaux - arr. : {', '.join(arrs)}")
+                resume_ouvertures.append(f"{d} ({total} créneaux, arr. {', '.join(arrs)})")
             elif before_day is not None:
                 # alerte rapide (toutes les 2 min) ; l'horaire précis est enregistré au relevé des 15 min
                 ups = [f"{c} ({a}) +{n - before_day[c]}" for c, (a, n) in centres.items()
@@ -300,6 +324,11 @@ def main():
                     rec["minutes"] = round((t1 - t0).total_seconds() / 60)
             time.sleep(1)
 
+        # une seule notification, même si plusieurs jours ouvrent d'un coup
+        if resume_ouvertures:
+            titre = "Nouveau jour ouvert" if len(resume_ouvertures) == 1 else f"{len(resume_ouvertures)} nouveaux jours ouverts"
+            notify(titre, f"à {now[11:16]} : " + " ; ".join(resume_ouvertures))
+
         # garder 60 jours d'historique de remplissage
         limite = (datetime.now(TZ).replace(tzinfo=None)).timestamp() - 60 * 86400
         state["remplissage"] = {d: r for d, r in state["remplissage"].items()
@@ -309,6 +338,8 @@ def main():
         detail = ("ouverture : " + ", ".join(opened)) if opened else ""
         if suspect:
             detail = (detail + " ; " if detail else "") + "filtre de date non appliqué (jours identiques)"
+        if chute:
+            detail = (detail + " ; " if detail else "") + f"fenêtre réduite : {len(prev_s)} -> {len(s_list)} jours"
         append(REQUETES, ["timestamp", "statut", "nb_jours", "dernier_jour", "detail"],
                [now, "suspect" if suspect else "ok", len(s_list), s_list[-1] if s_list else "", detail])
         with open(CENTRES, "w", newline="", encoding="utf-8") as f:  # instantané, réécrit à chaque passage
@@ -392,7 +423,7 @@ def main():
         with open(STATE, "w", encoding="utf-8") as f:
             json.dump({"dates": dates, "sentinel_days": s_list, "dernier_jour_ouvert": s_list[-1] if s_list else "",
                        "arr": arr_of, "centres": new_state_centres, "horaires_ts": last_h,
-                       "remplissage": state["remplissage"],
+                       "remplissage": state["remplissage"], "max_jour": state.get("max_jour"),
                        "alertes_libres": state.get("alertes_libres", []), "last_run": now},
                       f, ensure_ascii=False, indent=1)
         print(f"{now} : recherche jusqu'au {dates[-1]} ; réservable jusqu'au {s_list[-1] if s_list else '?'}")
