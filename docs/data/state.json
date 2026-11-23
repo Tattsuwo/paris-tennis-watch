@@ -62,7 +62,7 @@
    "Cordelières": 9
   },
   "Samedi 05 décembre": {
-   "Rigoulot - La Plaine": 33,
+   "Rigoulot - La Plaine": 32,
    "Elisabeth": 25,
    "Cordelières": 15,
    "Dunois": 14,
@@ -106,5 +106,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-23 14:56:22"
+ "last_run": "2026-11-23 14:58:23"
 }
