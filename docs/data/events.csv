@@ -21,3 +21,35 @@ timestamp,type,date_jeu,centre,arrondissement,avant,apres,creneau
 2026-11-22 23:28:23,liberation,Lundi 23 novembre,Elisabeth,14e,,,11:00 (court 5)
 2026-11-23 00:08:23,liberation,Dimanche 29 novembre,Rigoulot - La Plaine,15e,,,15:00 (court 1)
 2026-11-23 02:08:21,liberation,Dimanche 06 décembre,Elisabeth,14e,,,16:00 (court 6)
+2026-11-23 02:32:21,nouveau_jour,Lundi 07 décembre,Moureu - Baudricourt,13e,0,33,
+2026-11-23 02:32:21,nouveau_jour,Lundi 07 décembre,Dunois,13e,0,28,
+2026-11-23 02:32:21,nouveau_jour,Lundi 07 décembre,Poterne des Peupliers,13e,0,22,
+2026-11-23 02:32:21,nouveau_jour,Lundi 07 décembre,Georges Carpentier,13e,0,17,
+2026-11-23 02:32:21,nouveau_jour,Lundi 07 décembre,Cordelières,13e,0,8,
+2026-11-23 02:32:21,nouveau_jour,Lundi 07 décembre,Elisabeth,14e,0,60,
+2026-11-23 02:32:21,nouveau_jour,Lundi 07 décembre,Rigoulot - La Plaine,15e,0,80,
+2026-11-23 02:32:21,liberation,Samedi 28 novembre,Dunois,13e,,,11:00 (court 1)
+2026-11-23 02:32:21,liberation,Jeudi 03 décembre,Dunois,13e,,,19:00 (court 2)
+2026-11-23 02:32:21,liberation,Lundi 23 novembre,Moureu - Baudricourt,13e,,,10:00 (court 3)
+2026-11-23 02:32:21,liberation,Mardi 24 novembre,Moureu - Baudricourt,13e,,,09:00 (court 1)
+2026-11-23 02:32:21,liberation,Vendredi 04 décembre,Moureu - Baudricourt,13e,,,17:00 (court 2)
+2026-11-23 02:32:21,liberation,Lundi 23 novembre,Cordelières,13e,,,15:00 (court 2)
+2026-11-23 02:32:21,liberation,Samedi 05 décembre,Cordelières,13e,,,15:00 (court 2)
+2026-11-23 02:32:21,liberation,Lundi 23 novembre,Georges Carpentier,13e,,,16:00 (court 1)
+2026-11-23 02:32:21,liberation,Dimanche 29 novembre,Georges Carpentier,13e,,,13:00 (court 1)
+2026-11-23 02:32:21,liberation,Dimanche 06 décembre,Georges Carpentier,13e,,,17:00 (court 1)
+2026-11-23 02:32:21,liberation,Lundi 23 novembre,Poterne des Peupliers,13e,,,13:00 (court 2)
+2026-11-23 02:32:21,liberation,Samedi 05 décembre,Poterne des Peupliers,13e,,,18:00 (court 2)
+2026-11-23 02:32:21,liberation,Jeudi 26 novembre,Rigoulot - La Plaine,15e,,,11:00 (court 1)
+2026-11-23 02:32:21,liberation,Jeudi 26 novembre,Rigoulot - La Plaine,15e,,,18:00 (court 1)
+2026-11-23 02:32:21,liberation,Jeudi 26 novembre,Rigoulot - La Plaine,15e,,,19:00 (court 6)
+2026-11-23 02:32:21,liberation,Dimanche 29 novembre,Rigoulot - La Plaine,15e,,,08:00 (court 1)
+2026-11-23 02:32:21,liberation,Dimanche 29 novembre,Rigoulot - La Plaine,15e,,,08:00 (court 3)
+2026-11-23 02:32:21,liberation,Dimanche 29 novembre,Rigoulot - La Plaine,15e,,,13:00 (court 7)
+2026-11-23 02:32:21,liberation,Lundi 23 novembre,Elisabeth,14e,,,11:00 (court 6)
+2026-11-23 02:32:21,liberation,Mardi 24 novembre,Elisabeth,14e,,,14:00 (court 6)
+2026-11-23 02:32:21,liberation,Mercredi 25 novembre,Elisabeth,14e,,,10:00 (court 9)
+2026-11-23 02:32:21,liberation,Vendredi 27 novembre,Elisabeth,14e,,,14:00 (court 8)
+2026-11-23 02:32:21,liberation,Samedi 28 novembre,Elisabeth,14e,,,21:00 (court 1)
+2026-11-23 02:32:21,liberation,Dimanche 29 novembre,Elisabeth,14e,,,15:00 (court 7)
+2026-11-23 02:32:21,liberation,Dimanche 29 novembre,Elisabeth,14e,,,08:00 (court 8)

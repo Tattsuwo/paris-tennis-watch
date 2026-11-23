@@ -29,9 +29,10 @@
   "Jeudi 03 décembre",
   "Vendredi 04 décembre",
   "Samedi 05 décembre",
-  "Dimanche 06 décembre"
+  "Dimanche 06 décembre",
+  "Lundi 07 décembre"
  ],
- "dernier_jour_ouvert": "Dimanche 06 décembre",
+ "dernier_jour_ouvert": "Lundi 07 décembre",
  "arr": {
   "Dunois": "13e",
   "Moureu - Baudricourt": "13e",
@@ -45,7 +46,7 @@
   "Jeudi 03 décembre": {
    "Rigoulot - La Plaine": 64,
    "Elisabeth": 37,
-   "Dunois": 25,
+   "Dunois": 26,
    "Moureu - Baudricourt": 25,
    "Poterne des Peupliers": 19,
    "Georges Carpentier": 17,
@@ -55,7 +56,7 @@
    "Rigoulot - La Plaine": 74,
    "Elisabeth": 42,
    "Dunois": 28,
-   "Moureu - Baudricourt": 26,
+   "Moureu - Baudricourt": 27,
    "Poterne des Peupliers": 18,
    "Georges Carpentier": 16,
    "Cordelières": 9
@@ -63,11 +64,11 @@
   "Samedi 05 décembre": {
    "Rigoulot - La Plaine": 33,
    "Elisabeth": 25,
+   "Cordelières": 14,
    "Dunois": 14,
-   "Cordelières": 13,
    "Moureu - Baudricourt": 10,
-   "Georges Carpentier": 4,
-   "Poterne des Peupliers": 4
+   "Poterne des Peupliers": 5,
+   "Georges Carpentier": 4
   },
   "Dimanche 06 décembre": {
    "Rigoulot - La Plaine": 37,
@@ -76,11 +77,20 @@
    "Dunois": 12,
    "Moureu - Baudricourt": 7,
    "Poterne des Peupliers": 6,
-   "Georges Carpentier": 4
+   "Georges Carpentier": 5
+  },
+  "Lundi 07 décembre": {
+   "Rigoulot - La Plaine": 80,
+   "Elisabeth": 60,
+   "Moureu - Baudricourt": 33,
+   "Dunois": 28,
+   "Poterne des Peupliers": 22,
+   "Georges Carpentier": 17,
+   "Cordelières": 8
   },
   "Vendredi 27 novembre": {
    "Rigoulot - La Plaine": 47,
-   "Elisabeth": 24,
+   "Elisabeth": 25,
    "Dunois": 23,
    "Moureu - Baudricourt": 14,
    "Cordelières": 5,
@@ -88,8 +98,13 @@
    "Georges Carpentier": 3
   }
  },
- "horaires_ts": "2026-11-23 02:28:25",
- "remplissage": {},
+ "horaires_ts": "2026-11-23 02:32:21",
+ "remplissage": {
+  "Lundi 07 décembre": {
+   "ouverture": "2026-11-23 02:32:21",
+   "n0": 248
+  }
+ },
  "alertes_libres": [],
- "last_run": "2026-11-23 02:28:25"
+ "last_run": "2026-11-23 02:32:21"
 }
