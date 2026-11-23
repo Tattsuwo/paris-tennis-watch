@@ -187,7 +187,14 @@ function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&l
 
   const openRows = events.filter(e => e.type === "nouveau_jour");
   const openMap = {};
-  openRows.forEach(e => { const k = e.date_jeu; if (!openMap[k]) openMap[k] = { date_jeu: k, timestamp: e.timestamp, arr: new Set() }; openMap[k].arr.add(e.arrondissement); });
+  openRows.forEach(e => {
+    const k = e.date_jeu;
+    if (!openMap[k]) openMap[k] = { date_jeu: k, timestamp: e.timestamp, arr: new Set(), centres: {} };
+    const o = openMap[k];
+    if (e.timestamp < o.timestamp) o.timestamp = e.timestamp;   // 1re ouverture = heure du jour
+    o.arr.add(e.arrondissement);
+    if (e.centre && (!o.centres[e.centre] || e.timestamp < o.centres[e.centre])) o.centres[e.centre] = e.timestamp;
+  });
   const opens = Object.values(openMap).sort((a, b) => a.timestamp.localeCompare(b.timestamp));
 
   // heures d'ouverture par jour de la semaine : regroupe les heures proches (écart < 30 min),
@@ -230,8 +237,13 @@ function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&l
 
 
   document.getElementById("opens").innerHTML = opens.length
-    ? "<table class=\"stack\"><tr><th>Jour de jeu</th><th>Ouvert à</th><th>Arrondissements</th></tr>" +
-      opens.slice().reverse().slice(0, 30).map(e => `<tr><td data-l="Jour de jeu"><b>${esc(e.date_jeu)}</b></td><td data-l="Ouvert à">${esc(e.timestamp)}</td><td data-l="Arr.">${esc([...e.arr].join(", "))}</td></tr>`).join("") + "</table>"
+    ? "<table class=\"stack\"><tr><th>Jour de jeu</th><th>Ouvert à</th><th>Arrondissements</th><th>Centres ouverts plus tard</th></tr>" +
+      opens.slice().reverse().slice(0, 30).map(e => {
+        const t0 = asDate(e.timestamp);
+        const tard = Object.entries(e.centres).filter(([, ts]) => (asDate(ts) - t0) / 60000 >= 5)
+          .sort((a, b) => a[1].localeCompare(b[1])).map(([c, ts]) => `${esc(c)} ${ts.slice(11, 16)}`);
+        return `<tr><td data-l="Jour de jeu"><b>${esc(e.date_jeu)}</b></td><td data-l="Ouvert à">${esc(e.timestamp)}</td><td data-l="Arr.">${esc([...e.arr].join(", "))}</td><td data-l="Plus tard" class="hint">${tard.length ? tard.join(" · ") : "tous en même temps"}</td></tr>`;
+      }).join("") + "</table>"
     : '<div class="empty">Aucune ouverture observée pour l\'instant. La première apparaîtra au prochain nouveau jour.</div>';
 
   const selArr = new Set();
