@@ -825,3 +825,4 @@ timestamp,statut,nb_jours,dernier_jour,detail
 2026-11-23 06:28:21,ok,15,Lundi 07 décembre,
 2026-11-23 06:30:50,erreur,,,404 Client Error: Not Found for url: https://tennispadel.paris.fr/tennispadel/jsp/site/Portal.jsp?page=paristennis&sport=1
 2026-11-23 06:32:22,erreur,,,404 Client Error: Not Found for url: https://tennispadel.paris.fr/tennispadel/jsp/site/Portal.jsp?page=paristennis&sport=1
+2026-11-23 06:34:20,erreur,,,404 Client Error: Not Found for url: https://tennispadel.paris.fr/tennispadel/jsp/site/Portal.jsp?page=paristennis&sport=1
