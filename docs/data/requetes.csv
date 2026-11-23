@@ -969,3 +969,4 @@ timestamp,statut,nb_jours,dernier_jour,detail
 2026-11-23 11:36:23,ok,15,Lundi 07 décembre,
 2026-11-23 11:38:22,ok,15,Lundi 07 décembre,
 2026-11-23 11:40:38,ok,15,Lundi 07 décembre,
+2026-11-23 11:42:22,erreur,,,502 Server Error: Bad Gateway for url: https://tennispadel.paris.fr/tennispadel/jsp/site/Portal.jsp?page=centre-sportif&id=257
