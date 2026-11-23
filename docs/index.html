@@ -87,6 +87,7 @@
   <div class="card">
     <h2>Derniers événements (par centre)</h2>
     <div id="events"></div>
+    <div style="text-align:center;margin-top:10px"><button class="chip" id="moreEvents" hidden></button></div>
   </div>
 
   <div class="card">
@@ -207,11 +208,18 @@ function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&l
   const ce = parseCSV(ceTxt || "");
   const cols = ce.length ? ceLines[0].split(",").slice(2) : [];
 
+  const EV_PAGE = 30;
+  let evLimit = EV_PAGE;
   function renderEvents() {
     const ev = events.filter(e => keep(e.arrondissement));
+    const more = document.getElementById("moreEvents");
+    const rest = ev.length - evLimit;
+    more.hidden = rest <= 0;
+    more.textContent = `Afficher plus (${Math.min(rest, EV_PAGE)} sur ${rest} restants)`;
+    more.onclick = () => { evLimit += EV_PAGE; renderEvents(); };
     document.getElementById("events").innerHTML = ev.length
     ? "<table class=\"stack\"><tr><th>Quand</th><th>Type</th><th>Jour de jeu</th><th>Centre</th><th>Arr.</th><th>Créneau libéré</th><th>Délai</th></tr>" +
-      ev.slice().reverse().slice(0, 60).map(e => `<tr><td data-l="Vu à">${esc(e.timestamp)}</td><td data-l="Type"><span class="tag ${e.type === "nouveau_jour" ? "new" : "up"}">${e.type === "nouveau_jour" ? "nouveau jour" : "libérés"}</span></td><td data-l="Jour de jeu"><b>${esc(e.date_jeu)}</b></td><td data-l="Centre">${esc(e.centre || "")}</td><td data-l="Arr.">${esc(e.arrondissement || "")}</td><td data-l="Créneau">${e.type === "nouveau_jour" ? `<span class="hint">${esc(e.apres || "")} créneaux ouverts</span>` : (e.creneau ? `<span class="slot">${esc(e.creneau)}</span>` : `<span class="hint">+${(+e.apres || 0) - (+e.avant || 0)}</span>`)}</td><td class="hint" data-l="Délai">${e.type === "liberation" ? esc(fmtDelai(delaiHeures(e))) : ""}</td></tr>`).join("") + "</table>"
+      ev.slice().reverse().slice(0, evLimit).map(e => `<tr><td data-l="Vu à">${esc(e.timestamp)}</td><td data-l="Type"><span class="tag ${e.type === "nouveau_jour" ? "new" : "up"}">${e.type === "nouveau_jour" ? "nouveau jour" : "libérés"}</span></td><td data-l="Jour de jeu"><b>${esc(e.date_jeu)}</b></td><td data-l="Centre">${esc(e.centre || "")}</td><td data-l="Arr.">${esc(e.arrondissement || "")}</td><td data-l="Créneau">${e.type === "nouveau_jour" ? `<span class="hint">${esc(e.apres || "")} créneaux ouverts</span>` : (e.creneau ? `<span class="slot">${esc(e.creneau)}</span>` : `<span class="hint">+${(+e.apres || 0) - (+e.avant || 0)}</span>`)}</td><td class="hint" data-l="Délai">${e.type === "liberation" ? esc(fmtDelai(delaiHeures(e))) : ""}</td></tr>`).join("") + "</table>"
     : '<div class="empty">' + (events.length ? "Aucun événement dans les arrondissements choisis." : "Aucun événement pour l'instant.") + '</div>';
   }
 
@@ -250,7 +258,7 @@ function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&l
       const a = b.dataset.a;
       if (!a) selArr.clear(); else if (selArr.has(a)) selArr.delete(a); else selArr.add(a);
       try { localStorage.setItem("arrFilter", JSON.stringify([...selArr])); } catch (e) {}
-      renderFilter(); renderEvents(); renderHoraires();
+      evLimit = EV_PAGE; renderFilter(); renderEvents(); renderHoraires();
     });
   }
   renderFilter(); renderEvents(); renderHoraires();
