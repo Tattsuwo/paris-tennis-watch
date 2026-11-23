@@ -40,6 +40,26 @@
   .health.ok { color:var(--accent); } .health.warn { color:#b8860b; } .health.ko { color:#c0392b; }
   #requetes { overflow-x:auto; } #requetes td:not(:last-child), #requetes th { white-space:nowrap; } #requetes td:last-child { word-break:break-word; }
   tr.total td { font-weight:600; border-top:2px solid var(--line); }
+  @media (max-width: 640px) {
+    main { padding:16px 10px 32px; }
+    h1 { font-size:19px; }
+    .health { margin:6px 0 0; }
+    .card { padding:12px; margin-bottom:12px; }
+    .kpis { grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+    .kpis .card { padding:10px; }
+    .value { font-size:18px; }
+    .label, .hint { font-size:11px; }
+    table { font-size:13px; }
+    table.stack, table.stack tbody, table.stack tr, table.stack td { display:block; width:100%; }
+    table.stack tr:first-child { display:none; }
+    table.stack tr { padding:8px 0; border-bottom:1px solid var(--line); }
+    table.stack td { display:flex; gap:8px; padding:1px 0; border:0; text-align:left; white-space:normal !important; }
+    table.stack td:empty { display:none; }
+    table.stack td::before { content:attr(data-l); flex:0 0 84px; color:var(--muted); font-size:11px; padding-top:2px; }
+    #requetes td:last-child { overflow-wrap:anywhere; word-break:normal; }
+    #horaires td { padding:6px 4px; }
+    .slot { font-size:11px; padding:1px 5px; }
+  }
 </style>
 </head>
 <body>
@@ -174,8 +194,8 @@ function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&l
 
 
   document.getElementById("opens").innerHTML = opens.length
-    ? "<table><tr><th>Jour de jeu</th><th>Ouvert à</th><th>Arrondissements</th></tr>" +
-      opens.slice().reverse().slice(0, 30).map(e => `<tr><td>${esc(e.date_jeu)}</td><td>${esc(e.timestamp)}</td><td>${esc([...e.arr].join(", "))}</td></tr>`).join("") + "</table>"
+    ? "<table class=\"stack\"><tr><th>Jour de jeu</th><th>Ouvert à</th><th>Arrondissements</th></tr>" +
+      opens.slice().reverse().slice(0, 30).map(e => `<tr><td data-l="Jour de jeu"><b>${esc(e.date_jeu)}</b></td><td data-l="Ouvert à">${esc(e.timestamp)}</td><td data-l="Arr.">${esc([...e.arr].join(", "))}</td></tr>`).join("") + "</table>"
     : '<div class="empty">Aucune ouverture observée pour l\'instant. La première apparaîtra au prochain nouveau jour.</div>';
 
   const selArr = new Set();
@@ -190,8 +210,8 @@ function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&l
   function renderEvents() {
     const ev = events.filter(e => keep(e.arrondissement));
     document.getElementById("events").innerHTML = ev.length
-    ? "<table><tr><th>Quand</th><th>Type</th><th>Jour de jeu</th><th>Centre</th><th>Arr.</th><th>Créneau libéré</th><th>Délai</th></tr>" +
-      ev.slice().reverse().slice(0, 60).map(e => `<tr><td>${esc(e.timestamp)}</td><td><span class="tag ${e.type === "nouveau_jour" ? "new" : "up"}">${e.type === "nouveau_jour" ? "nouveau jour" : "libérés"}</span></td><td>${esc(e.date_jeu)}</td><td>${esc(e.centre || "")}</td><td>${esc(e.arrondissement || "")}</td><td>${e.type === "nouveau_jour" ? `<span class="hint">${esc(e.apres || "")} créneaux ouverts</span>` : (e.creneau ? `<span class="slot">${esc(e.creneau)}</span>` : `<span class="hint">+${(+e.apres || 0) - (+e.avant || 0)}</span>`)}</td><td class="hint">${e.type === "liberation" ? esc(fmtDelai(delaiHeures(e))) : ""}</td></tr>`).join("") + "</table>"
+    ? "<table class=\"stack\"><tr><th>Quand</th><th>Type</th><th>Jour de jeu</th><th>Centre</th><th>Arr.</th><th>Créneau libéré</th><th>Délai</th></tr>" +
+      ev.slice().reverse().slice(0, 60).map(e => `<tr><td data-l="Vu à">${esc(e.timestamp)}</td><td data-l="Type"><span class="tag ${e.type === "nouveau_jour" ? "new" : "up"}">${e.type === "nouveau_jour" ? "nouveau jour" : "libérés"}</span></td><td data-l="Jour de jeu"><b>${esc(e.date_jeu)}</b></td><td data-l="Centre">${esc(e.centre || "")}</td><td data-l="Arr.">${esc(e.arrondissement || "")}</td><td data-l="Créneau">${e.type === "nouveau_jour" ? `<span class="hint">${esc(e.apres || "")} créneaux ouverts</span>` : (e.creneau ? `<span class="slot">${esc(e.creneau)}</span>` : `<span class="hint">+${(+e.apres || 0) - (+e.avant || 0)}</span>`)}</td><td class="hint" data-l="Délai">${e.type === "liberation" ? esc(fmtDelai(delaiHeures(e))) : ""}</td></tr>`).join("") + "</table>"
     : '<div class="empty">' + (events.length ? "Aucun événement dans les arrondissements choisis." : "Aucun événement pour l'instant.") + '</div>';
   }
 
@@ -242,8 +262,8 @@ function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&l
     ? `· ${rq.length} passages · dernier : ${lastRq.timestamp} (${lastRq.statut})` + (errs24 ? ` · ${errs24} anomalie(s) récente(s)` : "")
     : "";
   document.getElementById("requetes").innerHTML = rq.length
-    ? "<table><tr><th>Heure (Paris)</th><th>Statut</th><th>Jours réservables</th><th>Dernier jour</th><th>Détail</th></tr>" +
-      rq.slice().reverse().slice(0, 200).map(r => `<tr><td>${esc(r.timestamp)}</td><td>${r.statut === "ok" ? "ok" : `<span class="tag up">${esc(r.statut)}</span>`}</td><td class="num">${esc(r.nb_jours)}</td><td>${esc(r.dernier_jour)}</td><td>${esc(r.detail || "")}</td></tr>`).join("") + "</table>"
+    ? "<table class=\"stack\"><tr><th>Heure (Paris)</th><th>Statut</th><th>Jours réservables</th><th>Dernier jour</th><th>Détail</th></tr>" +
+      rq.slice().reverse().slice(0, 200).map(r => `<tr><td data-l="Heure">${esc(r.timestamp)}</td><td data-l="Statut">${r.statut === "ok" ? "ok" : `<span class="tag up">${esc(r.statut)}</span>`}</td><td class="num" data-l="Jours">${esc(r.nb_jours)}</td><td data-l="Dernier jour">${esc(r.dernier_jour)}</td><td data-l="Détail">${esc(r.detail || "")}</td></tr>`).join("") + "</table>"
     : '<div class="empty">Aucune requête enregistrée.</div>';
 
 })();
