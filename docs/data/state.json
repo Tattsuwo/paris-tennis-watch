@@ -16,7 +16,6 @@
   "Dimanche 06 décembre"
  ],
  "sentinel_days": [
-  "Lundi 23 novembre",
   "Mardi 24 novembre",
   "Mercredi 25 novembre",
   "Jeudi 26 novembre",
@@ -97,7 +96,7 @@
    "Georges Carpentier": 1
   }
  },
- "horaires_ts": "2026-11-23 16:50:37",
+ "horaires_ts": "2026-11-23 17:01:15",
  "remplissage": {
   "Lundi 07 décembre": {
    "ouverture": "2026-11-23 02:32:21",
@@ -105,5 +104,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-23 16:58:34"
+ "last_run": "2026-11-23 17:01:15"
 }
