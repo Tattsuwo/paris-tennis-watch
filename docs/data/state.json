@@ -95,7 +95,7 @@
    "Cordelières": 5
   }
  },
- "horaires_ts": "2026-11-23 20:50:38",
+ "horaires_ts": "2026-11-23 21:01:04",
  "remplissage": {
   "Lundi 07 décembre": {
    "ouverture": "2026-11-23 02:32:21",
@@ -104,5 +104,5 @@
  },
  "max_jour": "2026-12-07",
  "alertes_libres": [],
- "last_run": "2026-11-23 20:58:23"
+ "last_run": "2026-11-23 21:01:04"
 }
