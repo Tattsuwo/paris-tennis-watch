@@ -75,8 +75,11 @@
   </div>
 
   <div class="card">
-    <h2>Filtrer par arrondissement <span class="hint">· s'applique aux horaires et aux événements</span></h2>
+    <h2>Filtrer <span class="hint">· s'applique aux horaires et aux événements</span></h2>
+    <div class="label" style="margin-bottom:6px">Arrondissement</div>
     <div class="chips" id="arrFilter"><span class="empty">Disponible après le prochain passage.</span></div>
+    <div class="label" style="margin:12px 0 6px">Centre</div>
+    <div class="chips" id="centreFilter"></div>
   </div>
 
   <div class="card">
@@ -202,6 +205,9 @@ function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&l
   const selArr = new Set();
   try { JSON.parse(localStorage.getItem("arrFilter") || "[]").forEach(a => selArr.add(a)); } catch (e) {}
   const keep = a => selArr.size === 0 || selArr.has(a);
+  const selCentre = new Set();
+  try { JSON.parse(localStorage.getItem("centreFilter") || "[]").forEach(c => selCentre.add(c)); } catch (e) {}
+  const keepC = c => selCentre.size === 0 || selCentre.has(c);
   const rank = a => { const n = parseInt(a, 10); return isNaN(n) ? 999 : (n > 1000 ? 100 + n / 1e5 : n); };
 
   const ceLines = (ceTxt || "").trim().split(/\r?\n/);
@@ -211,7 +217,7 @@ function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&l
   const EV_PAGE = 30;
   let evLimit = EV_PAGE;
   function renderEvents() {
-    const ev = events.filter(e => keep(e.arrondissement));
+    const ev = events.filter(e => keep(e.arrondissement) && keepC(e.centre));
     const more = document.getElementById("moreEvents");
     const rest = ev.length - evLimit;
     more.hidden = rest <= 0;
@@ -238,7 +244,7 @@ function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&l
     const box = document.getElementById("horaires");
     if (!hor) { box.innerHTML = '<div class="empty">Disponible après le prochain relevé des horaires.</div>'; daySel.style.display = "none"; return; }
     document.getElementById("horHint").textContent = "· relevé du " + hor.maj + " (toutes les " + (hor.intervalle_min || 15) + " min)";
-    const rows = Object.entries(hor.centres).filter(([, c]) => keep(c.arrondissement))
+    const rows = Object.entries(hor.centres).filter(([name, c]) => keep(c.arrondissement) && keepC(name))
       .sort((a, b) => rank(a[1].arrondissement) - rank(b[1].arrondissement) || a[0].localeCompare(b[0]));
     box.innerHTML = rows.length ? "<table><tr><th>Arr.</th><th>Centre</th><th>Créneaux libres</th></tr>" + rows.map(([name, c]) => {
       const byTime = {};
@@ -258,6 +264,24 @@ function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&l
       const a = b.dataset.a;
       if (!a) selArr.clear(); else if (selArr.has(a)) selArr.delete(a); else selArr.add(a);
       try { localStorage.setItem("arrFilter", JSON.stringify([...selArr])); } catch (e) {}
+      evLimit = EV_PAGE; renderFilter(); renderEvents(); renderHoraires();
+    });
+
+    // centres : seulement ceux des arrondissements choisis
+    const arrOf = {};
+    if (hor) Object.entries(hor.centres).forEach(([n, c]) => arrOf[n] = c.arrondissement);
+    ce.forEach(r => arrOf[r.centre] = arrOf[r.centre] || r.arrondissement);
+    events.forEach(e => { if (e.centre) arrOf[e.centre] = arrOf[e.centre] || e.arrondissement; });
+    const centres = Object.keys(arrOf).filter(c => keep(arrOf[c]))
+      .sort((a, b) => rank(arrOf[a]) - rank(arrOf[b]) || a.localeCompare(b));
+    [...selCentre].forEach(c => { if (!centres.includes(c)) selCentre.delete(c); });
+    const cbox = document.getElementById("centreFilter");
+    cbox.innerHTML = `<button class="chip ${selCentre.size === 0 ? "on" : ""}" data-c="">Tous</button>` +
+      centres.map(c => `<button class="chip ${selCentre.has(c) ? "on" : ""}" data-c="${esc(c)}">${esc(c)}</button>`).join("");
+    cbox.querySelectorAll(".chip").forEach(b => b.onclick = () => {
+      const c = b.dataset.c;
+      if (!c) selCentre.clear(); else if (selCentre.has(c)) selCentre.delete(c); else selCentre.add(c);
+      try { localStorage.setItem("centreFilter", JSON.stringify([...selCentre])); } catch (e) {}
       evLimit = EV_PAGE; renderFilter(); renderEvents(); renderHoraires();
     });
   }
