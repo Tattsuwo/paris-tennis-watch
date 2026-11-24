@@ -84,9 +84,9 @@
    "Elisabeth": 51,
    "Dunois": 26,
    "Georges Carpentier": 24,
-   "Moureu - Baudricourt": 22,
+   "Moureu - Baudricourt": 21,
    "Poterne des Peupliers": 18,
-   "Cordelières": 12
+   "Cordelières": 11
   },
   "Vendredi 27 novembre": {
    "Rigoulot - La Plaine": 42,
@@ -122,5 +122,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-24 08:06:28"
+ "last_run": "2026-11-24 08:08:27"
 }
