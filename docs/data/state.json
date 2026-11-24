@@ -16,7 +16,6 @@
   "Lundi 07 décembre"
  ],
  "sentinel_days": [
-  "Mardi 24 novembre",
   "Mercredi 25 novembre",
   "Jeudi 26 novembre",
   "Vendredi 27 novembre",
@@ -121,5 +120,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-24 18:52:30"
+ "last_run": "2026-11-24 18:54:31"
 }
