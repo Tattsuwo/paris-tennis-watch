@@ -74,7 +74,7 @@
    "Rigoulot - La Plaine": 77,
    "Elisabeth": 51,
    "Dunois": 26,
-   "Georges Carpentier": 21,
+   "Georges Carpentier": 22,
    "Moureu - Baudricourt": 20,
    "Poterne des Peupliers": 16,
    "Cordelières": 11
@@ -143,5 +143,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-25 11:46:25"
+ "last_run": "2026-11-25 11:48:33"
 }
