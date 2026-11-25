@@ -92,7 +92,7 @@
    "Rigoulot - La Plaine": 38,
    "Dunois": 16,
    "Elisabeth": 12,
-   "Moureu - Baudricourt": 7,
+   "Moureu - Baudricourt": 6,
    "Cordelières": 2
   },
   "Vendredi 04 décembre": {
@@ -105,7 +105,7 @@
    "Cordelières": 9
   }
  },
- "horaires_ts": "2026-11-25 17:18:29",
+ "horaires_ts": "2026-11-25 17:28:47",
  "remplissage": {
   "Lundi 07 décembre": {
    "ouverture": "2026-11-23 02:32:21",
@@ -142,5 +142,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-25 17:26:26"
+ "last_run": "2026-11-25 17:28:47"
 }
