@@ -16,7 +16,6 @@
   "Mercredi 09 décembre"
  ],
  "sentinel_days": [
-  "Jeudi 26 novembre",
   "Vendredi 27 novembre",
   "Samedi 28 novembre",
   "Dimanche 29 novembre",
@@ -106,7 +105,7 @@
    "Cordelières": 9
   }
  },
- "horaires_ts": "2026-11-26 20:50:43",
+ "horaires_ts": "2026-11-26 21:01:05",
  "remplissage": {
   "Lundi 07 décembre": {
    "ouverture": "2026-11-23 02:32:21",
@@ -156,5 +155,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-26 20:58:25"
+ "last_run": "2026-11-26 21:01:05"
 }
