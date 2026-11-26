@@ -53,7 +53,7 @@
    "Poterne des Peupliers": 1
   },
   "Lundi 07 décembre": {
-   "Rigoulot - La Plaine": 70,
+   "Rigoulot - La Plaine": 71,
    "Elisabeth": 46,
    "Moureu - Baudricourt": 32,
    "Dunois": 28,
@@ -94,7 +94,7 @@
    "Elisabeth": 14,
    "Moureu - Baudricourt": 6,
    "Cordelières": 2,
-   "Georges Carpentier": 1
+   "Georges Carpentier": 2
   },
   "Vendredi 04 décembre": {
    "Rigoulot - La Plaine": 65,
@@ -156,5 +156,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-26 08:04:30"
+ "last_run": "2026-11-26 08:06:27"
 }
