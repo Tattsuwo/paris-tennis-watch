@@ -29,9 +29,10 @@
   "Dimanche 06 décembre",
   "Lundi 07 décembre",
   "Mardi 08 décembre",
-  "Mercredi 09 décembre"
+  "Mercredi 09 décembre",
+  "Jeudi 10 décembre"
  ],
- "dernier_jour_ouvert": "Mercredi 09 décembre",
+ "dernier_jour_ouvert": "Jeudi 10 décembre",
  "arr": {
   "Dunois": "13e",
   "Moureu - Baudricourt": "13e",
@@ -78,11 +79,20 @@
    "Cordelières": 9,
    "Poterne des Peupliers": 4
   },
+  "Jeudi 10 décembre": {
+   "Rigoulot - La Plaine": 78,
+   "Elisabeth": 41,
+   "Moureu - Baudricourt": 33,
+   "Dunois": 26,
+   "Poterne des Peupliers": 21,
+   "Georges Carpentier": 20,
+   "Cordelières": 9
+  },
   "Vendredi 27 novembre": {
    "Rigoulot - La Plaine": 38,
    "Dunois": 15,
-   "Elisabeth": 13,
-   "Moureu - Baudricourt": 5,
+   "Elisabeth": 14,
+   "Moureu - Baudricourt": 6,
    "Cordelières": 2,
    "Georges Carpentier": 1,
    "Poterne des Peupliers": 1
@@ -97,7 +107,7 @@
    "Cordelières": 9
   }
  },
- "horaires_ts": "2026-11-26 02:28:34",
+ "horaires_ts": "2026-11-26 02:34:36",
  "remplissage": {
   "Lundi 07 décembre": {
    "ouverture": "2026-11-23 02:32:21",
@@ -110,9 +120,13 @@
   "Mercredi 09 décembre": {
    "ouverture": "2026-11-25 02:34:27",
    "n0": 152
+  },
+  "Jeudi 10 décembre": {
+   "ouverture": "2026-11-26 02:34:36",
+   "n0": 228
   }
  },
- "max_jour": "2026-12-09",
+ "max_jour": "2026-12-10",
  "ouv_centres": {
   "Mardi 08 décembre": {
    "Dunois": "2026-11-24 02:34:29",
@@ -131,8 +145,17 @@
    "Poterne des Peupliers": "2026-11-25 02:34:27",
    "Elisabeth": "2026-11-25 02:34:27",
    "Rigoulot - La Plaine": "2026-11-25 02:34:27"
+  },
+  "Jeudi 10 décembre": {
+   "Moureu - Baudricourt": "2026-11-26 02:34:36",
+   "Dunois": "2026-11-26 02:34:36",
+   "Poterne des Peupliers": "2026-11-26 02:34:36",
+   "Georges Carpentier": "2026-11-26 02:34:36",
+   "Cordelières": "2026-11-26 02:34:36",
+   "Elisabeth": "2026-11-26 02:34:36",
+   "Rigoulot - La Plaine": "2026-11-26 02:34:36"
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-26 02:28:34"
+ "last_run": "2026-11-26 02:34:36"
 }
