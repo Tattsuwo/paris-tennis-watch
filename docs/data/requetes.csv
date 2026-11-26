@@ -2849,3 +2849,4 @@ timestamp,statut,nb_jours,dernier_jour,detail
 2026-11-26 03:34:27,erreur,,,"HTTPSConnectionPool(host='tennispadel.paris.fr', port=443): Read timed out. (read timeout=30)"
 2026-11-26 03:36:26,erreur,,,"HTTPSConnectionPool(host='tennispadel.paris.fr', port=443): Read timed out. (read timeout=60)"
 2026-11-26 03:40:59,erreur,,,"HTTPSConnectionPool(host='tennispadel.paris.fr', port=443): Read timed out. (read timeout=30)"
+2026-11-26 03:42:27,erreur,,,"HTTPSConnectionPool(host='tennispadel.paris.fr', port=443): Read timed out. (read timeout=30)"
