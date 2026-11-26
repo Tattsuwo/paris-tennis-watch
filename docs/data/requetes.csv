@@ -2845,3 +2845,4 @@ timestamp,statut,nb_jours,dernier_jour,detail
 2026-11-26 03:26:34,ok,15,Jeudi 10 décembre,
 2026-11-26 03:28:28,erreur,,,"HTTPSConnectionPool(host='tennispadel.paris.fr', port=443): Read timed out. (read timeout=30)"
 2026-11-26 03:31:07,erreur,,,"HTTPSConnectionPool(host='tennispadel.paris.fr', port=443): Read timed out. (read timeout=30)"
+2026-11-26 03:32:35,erreur,,,404 Client Error: Not Found for url: https://tennispadel.paris.fr/tennispadel/jsp/site/Portal.jsp?page=paristennis&sport=1
