@@ -67,7 +67,7 @@
    "Dunois": 26,
    "Georges Carpentier": 21,
    "Moureu - Baudricourt": 20,
-   "Poterne des Peupliers": 16,
+   "Poterne des Peupliers": 15,
    "Cordelières": 11
   },
   "Mercredi 09 décembre": {
@@ -80,7 +80,7 @@
    "Poterne des Peupliers": 4
   },
   "Jeudi 10 décembre": {
-   "Rigoulot - La Plaine": 73,
+   "Rigoulot - La Plaine": 72,
    "Elisabeth": 40,
    "Moureu - Baudricourt": 32,
    "Dunois": 26,
@@ -106,7 +106,7 @@
    "Cordelières": 9
   }
  },
- "horaires_ts": "2026-11-26 09:44:28",
+ "horaires_ts": "2026-11-26 09:54:27",
  "remplissage": {
   "Lundi 07 décembre": {
    "ouverture": "2026-11-23 02:32:21",
@@ -156,5 +156,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-26 09:52:25"
+ "last_run": "2026-11-26 09:54:27"
 }
