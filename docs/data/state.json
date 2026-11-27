@@ -72,7 +72,7 @@
   },
   "Jeudi 10 décembre": {
    "Rigoulot - La Plaine": 64,
-   "Elisabeth": 35,
+   "Elisabeth": 34,
    "Moureu - Baudricourt": 27,
    "Dunois": 25,
    "Poterne des Peupliers": 19,
@@ -168,5 +168,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-27 09:18:25"
+ "last_run": "2026-11-27 09:20:41"
 }
