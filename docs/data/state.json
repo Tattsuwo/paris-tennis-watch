@@ -91,7 +91,6 @@
   "Vendredi 27 novembre": {
    "Dunois": 5,
    "Rigoulot - La Plaine": 5,
-   "Elisabeth": 1,
    "Moureu - Baudricourt": 1
   },
   "Vendredi 04 décembre": {
@@ -167,5 +166,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-27 15:26:27"
+ "last_run": "2026-11-27 15:28:31"
 }
