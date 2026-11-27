@@ -83,7 +83,7 @@
    "Rigoulot - La Plaine": 57,
    "Elisabeth": 48,
    "Dunois": 24,
-   "Moureu - Baudricourt": 19,
+   "Moureu - Baudricourt": 18,
    "Cordelières": 17,
    "Poterne des Peupliers": 14,
    "Georges Carpentier": 8
@@ -98,7 +98,7 @@
    "Cordelières": 8
   }
  },
- "horaires_ts": "2026-11-28 00:10:44",
+ "horaires_ts": "2026-11-28 00:20:45",
  "remplissage": {
   "Lundi 07 décembre": {
    "ouverture": "2026-11-23 02:32:21",
@@ -174,5 +174,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-28 00:18:27"
+ "last_run": "2026-11-28 00:20:45"
 }
