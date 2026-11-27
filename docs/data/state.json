@@ -89,10 +89,10 @@
    "Cordelières": 10
   },
   "Vendredi 27 novembre": {
-   "Rigoulot - La Plaine": 9,
-   "Dunois": 6,
-   "Elisabeth": 2,
-   "Moureu - Baudricourt": 2
+   "Dunois": 5,
+   "Rigoulot - La Plaine": 5,
+   "Elisabeth": 1,
+   "Moureu - Baudricourt": 1
   },
   "Vendredi 04 décembre": {
    "Rigoulot - La Plaine": 60,
@@ -167,5 +167,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-27 14:58:26"
+ "last_run": "2026-11-27 15:01:11"
 }
