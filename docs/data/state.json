@@ -29,9 +29,10 @@
   "Lundi 07 décembre",
   "Mardi 08 décembre",
   "Mercredi 09 décembre",
-  "Jeudi 10 décembre"
+  "Jeudi 10 décembre",
+  "Vendredi 11 décembre"
  ],
- "dernier_jour_ouvert": "Jeudi 10 décembre",
+ "dernier_jour_ouvert": "Vendredi 11 décembre",
  "arr": {
   "Dunois": "13e",
   "Moureu - Baudricourt": "13e",
@@ -78,6 +79,15 @@
    "Georges Carpentier": 17,
    "Cordelières": 9
   },
+  "Vendredi 11 décembre": {
+   "Rigoulot - La Plaine": 86,
+   "Elisabeth": 48,
+   "Moureu - Baudricourt": 37,
+   "Dunois": 28,
+   "Poterne des Peupliers": 23,
+   "Georges Carpentier": 16,
+   "Cordelières": 10
+  },
   "Vendredi 27 novembre": {
    "Rigoulot - La Plaine": 41,
    "Dunois": 15,
@@ -96,7 +106,7 @@
    "Cordelières": 9
   }
  },
- "horaires_ts": "2026-11-27 02:32:30",
+ "horaires_ts": "2026-11-27 02:34:25",
  "remplissage": {
   "Lundi 07 décembre": {
    "ouverture": "2026-11-23 02:32:21",
@@ -113,9 +123,13 @@
   "Jeudi 10 décembre": {
    "ouverture": "2026-11-26 02:34:36",
    "n0": 228
+  },
+  "Vendredi 11 décembre": {
+   "ouverture": "2026-11-27 02:34:25",
+   "n0": 248
   }
  },
- "max_jour": "2026-12-10",
+ "max_jour": "2026-12-11",
  "ouv_centres": {
   "Mardi 08 décembre": {
    "Dunois": "2026-11-24 02:34:29",
@@ -143,8 +157,17 @@
    "Cordelières": "2026-11-26 02:34:36",
    "Elisabeth": "2026-11-26 02:34:36",
    "Rigoulot - La Plaine": "2026-11-26 02:34:36"
+  },
+  "Vendredi 11 décembre": {
+   "Moureu - Baudricourt": "2026-11-27 02:34:25",
+   "Dunois": "2026-11-27 02:34:25",
+   "Poterne des Peupliers": "2026-11-27 02:34:25",
+   "Georges Carpentier": "2026-11-27 02:34:25",
+   "Cordelières": "2026-11-27 02:34:25",
+   "Elisabeth": "2026-11-27 02:34:25",
+   "Rigoulot - La Plaine": "2026-11-27 02:34:25"
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-27 02:32:30"
+ "last_run": "2026-11-27 02:34:25"
 }

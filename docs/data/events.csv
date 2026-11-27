@@ -365,3 +365,14 @@ timestamp,type,date_jeu,centre,arrondissement,avant,apres,creneau
 2026-11-27 02:32:30,liberation,Mardi 01 décembre,Georges Carpentier,13e,,,17:00 (court 1)
 2026-11-27 02:32:30,liberation,Jeudi 03 décembre,Poterne des Peupliers,13e,,,15:00 (court 2)
 2026-11-27 02:32:30,liberation,Vendredi 27 novembre,Rigoulot - La Plaine,15e,,,21:00 (court 6)
+2026-11-27 02:34:25,nouveau_jour,Vendredi 11 décembre,Moureu - Baudricourt,13e,0,37,
+2026-11-27 02:34:25,nouveau_jour,Vendredi 11 décembre,Dunois,13e,0,28,
+2026-11-27 02:34:25,nouveau_jour,Vendredi 11 décembre,Poterne des Peupliers,13e,0,23,
+2026-11-27 02:34:25,nouveau_jour,Vendredi 11 décembre,Georges Carpentier,13e,0,16,
+2026-11-27 02:34:25,nouveau_jour,Vendredi 11 décembre,Cordelières,13e,0,10,
+2026-11-27 02:34:25,nouveau_jour,Vendredi 11 décembre,Elisabeth,14e,0,48,
+2026-11-27 02:34:25,nouveau_jour,Vendredi 11 décembre,Rigoulot - La Plaine,15e,0,86,
+2026-11-27 02:34:25,liberation,Jeudi 03 décembre,Georges Carpentier,13e,,,16:00 (court 1)
+2026-11-27 02:34:25,liberation,Samedi 28 novembre,Poterne des Peupliers,13e,,,18:00 (court 2)
+2026-11-27 02:34:25,liberation,Lundi 30 novembre,Rigoulot - La Plaine,15e,,,19:00 (court 2)
+2026-11-27 02:34:25,liberation,Lundi 30 novembre,Elisabeth,14e,,,16:00 (court 6)
