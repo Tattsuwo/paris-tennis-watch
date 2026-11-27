@@ -92,8 +92,8 @@
    "Elisabeth": 29,
    "Dunois": 27,
    "Moureu - Baudricourt": 17,
-   "Georges Carpentier": 11,
    "Poterne des Peupliers": 11,
+   "Georges Carpentier": 10,
    "Cordelières": 9
   }
  },
@@ -160,5 +160,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-27 22:32:26"
+ "last_run": "2026-11-27 22:34:25"
 }
