@@ -84,7 +84,7 @@
    "Elisabeth": 48,
    "Moureu - Baudricourt": 37,
    "Dunois": 28,
-   "Poterne des Peupliers": 22,
+   "Poterne des Peupliers": 20,
    "Georges Carpentier": 16,
    "Cordelières": 10
   },
@@ -106,7 +106,7 @@
    "Cordelières": 9
   }
  },
- "horaires_ts": "2026-11-27 03:04:29",
+ "horaires_ts": "2026-11-27 03:14:27",
  "remplissage": {
   "Lundi 07 décembre": {
    "ouverture": "2026-11-23 02:32:21",
@@ -169,5 +169,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-27 03:12:27"
+ "last_run": "2026-11-27 03:14:27"
 }
