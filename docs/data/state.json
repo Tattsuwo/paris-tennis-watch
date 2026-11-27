@@ -96,7 +96,7 @@
   },
   "Vendredi 04 décembre": {
    "Rigoulot - La Plaine": 62,
-   "Elisabeth": 36,
+   "Elisabeth": 35,
    "Dunois": 28,
    "Moureu - Baudricourt": 18,
    "Georges Carpentier": 13,
@@ -167,5 +167,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-27 11:08:26"
+ "last_run": "2026-11-27 11:10:43"
 }
