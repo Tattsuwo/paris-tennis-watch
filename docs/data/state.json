@@ -16,7 +16,6 @@
   "Jeudi 10 décembre"
  ],
  "sentinel_days": [
-  "Vendredi 27 novembre",
   "Samedi 28 novembre",
   "Dimanche 29 novembre",
   "Lundi 30 novembre",
@@ -66,7 +65,7 @@
    "Rigoulot - La Plaine": 35,
    "Dunois": 22,
    "Moureu - Baudricourt": 13,
-   "Georges Carpentier": 9,
+   "Georges Carpentier": 8,
    "Cordelières": 7,
    "Poterne des Peupliers": 4
   },
@@ -87,10 +86,6 @@
    "Poterne des Peupliers": 19,
    "Georges Carpentier": 16,
    "Cordelières": 10
-  },
-  "Vendredi 27 novembre": {
-   "Dunois": 2,
-   "Rigoulot - La Plaine": 2
   },
   "Vendredi 04 décembre": {
    "Rigoulot - La Plaine": 55,
@@ -165,5 +160,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-27 20:58:24"
+ "last_run": "2026-11-27 21:01:06"
 }
