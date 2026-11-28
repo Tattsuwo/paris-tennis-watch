@@ -16,7 +16,6 @@
   "Vendredi 11 décembre"
  ],
  "sentinel_days": [
-  "Samedi 28 novembre",
   "Dimanche 29 novembre",
   "Lundi 30 novembre",
   "Mardi 01 décembre",
@@ -174,5 +173,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-28 20:58:24"
+ "last_run": "2026-11-28 21:01:05"
 }
