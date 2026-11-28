@@ -50,7 +50,7 @@
    "Georges Carpentier": 19,
    "Moureu - Baudricourt": 19,
    "Poterne des Peupliers": 15,
-   "Cordelières": 11
+   "Cordelières": 10
   },
   "Mercredi 09 décembre": {
    "Elisabeth": 37,
@@ -174,5 +174,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-28 14:06:25"
+ "last_run": "2026-11-28 14:08:25"
 }
