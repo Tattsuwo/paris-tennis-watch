@@ -75,8 +75,8 @@
    "Elisabeth": 44,
    "Moureu - Baudricourt": 34,
    "Dunois": 28,
-   "Poterne des Peupliers": 19,
-   "Georges Carpentier": 16,
+   "Poterne des Peupliers": 18,
+   "Georges Carpentier": 15,
    "Cordelières": 10
   },
   "Samedi 12 décembre": {
@@ -89,7 +89,7 @@
    "Georges Carpentier": 6
   },
   "Vendredi 04 décembre": {
-   "Rigoulot - La Plaine": 50,
+   "Rigoulot - La Plaine": 49,
    "Elisabeth": 28,
    "Dunois": 26,
    "Moureu - Baudricourt": 16,
@@ -174,5 +174,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-28 09:34:26"
+ "last_run": "2026-11-28 09:36:25"
 }
