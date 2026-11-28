@@ -81,7 +81,7 @@
   },
   "Samedi 12 décembre": {
    "Rigoulot - La Plaine": 55,
-   "Elisabeth": 43,
+   "Elisabeth": 42,
    "Dunois": 24,
    "Moureu - Baudricourt": 18,
    "Cordelières": 17,
@@ -174,5 +174,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-28 19:12:27"
+ "last_run": "2026-11-28 19:14:27"
 }
