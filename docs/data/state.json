@@ -44,11 +44,11 @@
  },
  "centres": {
   "Mardi 08 décembre": {
-   "Rigoulot - La Plaine": 74,
+   "Rigoulot - La Plaine": 73,
    "Elisabeth": 45,
    "Dunois": 25,
-   "Moureu - Baudricourt": 20,
    "Georges Carpentier": 19,
+   "Moureu - Baudricourt": 19,
    "Poterne des Peupliers": 15,
    "Cordelières": 11
   },
@@ -174,5 +174,5 @@
   }
  },
  "alertes_libres": [],
- "last_run": "2026-11-28 10:52:33"
+ "last_run": "2026-11-28 10:54:27"
 }
